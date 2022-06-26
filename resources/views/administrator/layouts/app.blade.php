@@ -33,7 +33,7 @@
             <a href="index3.html" class="brand-link">
                 <img src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">{{ Config::get('app.name', 'Tap & Buy'); }}</span>
             </a>
             @include('administrator.layouts.sidebar-nav')
 
@@ -92,7 +92,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('admin/dist/js/pages/dashboard2.js') }}"></script>
 </body>
 
 </html>
