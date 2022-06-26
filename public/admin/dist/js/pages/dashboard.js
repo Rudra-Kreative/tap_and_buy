@@ -266,12 +266,4 @@ $(function () {
   })
 })
 
-$('.timezonMarquee').marquee({
-  direction: 'left',
-  duration: 50000,
-  gap: 50,
-  delayBeforeStart: 0,
-  duplicated: true,
-  startVisible: true,
-  pauseOnHover: true // add this:
-});
+
