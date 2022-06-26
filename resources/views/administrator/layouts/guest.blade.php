@@ -16,9 +16,21 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
+
 <body>
-<div class="font-sans text-gray-900 antialiased">
-    {{ $slot }}
-</div>
+    <div class="font-sans text-gray-900 antialiased">
+        {{ $slot }}
+    </div>
+    <script type="text/javascript">
+        function showPreview(event) {
+            if (event.target.files.length > 0) {
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById("file-dp-1-preview");
+                preview.src = src;
+                //preview.style.display = "block";
+            }
+        }
+    </script>
 </body>
+
 </html>

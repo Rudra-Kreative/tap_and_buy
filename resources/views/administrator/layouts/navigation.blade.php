@@ -12,7 +12,7 @@
       <a href="#" class="nav-link">Contact</a>
     </li>
   </ul>
-
+  <marquee behavior="" class="timezoneMarquee" direction="">Timezone: {{ auth()->user()->timezone }}</marquee>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
@@ -128,9 +128,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+      <form method="POST" action="{{ route('administrator.logout') }}">
+        @csrf
+      <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="{{ route('administrator.logout') }}" onclick="event.preventDefault();
+      this.closest('form').submit();" role="button">
         <i class="fas fa-sign-out-alt"></i>
       </a>
+      </form>
     </li>
   </ul>
 </nav>

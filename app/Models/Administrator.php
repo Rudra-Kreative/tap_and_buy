@@ -20,6 +20,8 @@ class Administrator extends Authenticatable
         'name',
         'email',
         'password',
+        'timezone',
+        'image_path'
     ];
 
     /**
