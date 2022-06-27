@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('ended_at')->nullable();
             $table->boolean('is_completed')->default(false);
             $table->foreignId('pasused_by')->constrained('users','id')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

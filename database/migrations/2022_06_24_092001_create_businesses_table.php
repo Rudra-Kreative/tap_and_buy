@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('service_to');
             $table->foreignId('category_id')->constrained('categories','id')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users','id')->cascadeOnDelete();
+            $table->boolean('is_active')->default(TRUE);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

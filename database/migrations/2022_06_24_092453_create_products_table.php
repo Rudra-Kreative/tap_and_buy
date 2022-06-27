@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('desc');
+            $table->text('desc');
             $table->string('price');
             $table->foreignId('business_id')->constrained('businesses','id')->cascadeOnDelete();
+            $table->boolean('is_active')->default(TRUE);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

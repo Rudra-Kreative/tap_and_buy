@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('start_at');
             $table->boolean('is_running');
             $table->boolean('is_active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
