@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->foreignId('created_by')->constrained('users','id')->cascadeOnDelete();
+            $table->enum('created_by',['administrators','users'])->default('administrators');
+            $table->unsignedBigInteger('created_id');
             $table->timestamps();
         });
     }
