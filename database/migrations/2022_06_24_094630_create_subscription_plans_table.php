@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('duration'); //plan duration in days
             $table->json('features')->nullable(); // extra features for future
             $table->boolean('is_active')->default(TRUE);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

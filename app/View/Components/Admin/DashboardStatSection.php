@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Admin;
 
 use App\Models\Business;
 use App\Models\Product;
@@ -27,12 +27,12 @@ class DashboardStatSection extends Component
     public function render()
     {
         $stats = [
-            'businessTotal' => Business::count(),
-            'sellerTotal' => User::where('role' , 2)->count(),
-            'buyerTotal' => User::where('role' , 1)->count(),
-            'productTotal' => Product::count()
+            'businessTotal' => Business::where('is_active' , TRUE)->count(),
+            'sellerTotal' => User::where('is_active' , TRUE)->where('role' , 2)->count(),
+            'buyerTotal' => User::where('is_active' , TRUE)->where('role' , 1)->count(),
+            'productTotal' => Product::where('is_active' , TRUE)->count()
         ];
         
-        return view('components.dashboard-stat-section')->withStats($stats);
+        return view('components.admin.dashboard-stat-section')->withStats($stats);
     }
 }

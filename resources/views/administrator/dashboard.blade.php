@@ -13,5 +13,5 @@
         </div><!-- /.row -->
     </x-slot>
 
-    <x-dashboard-stat-section />
+    <x-admin.dashboard-stat-section />
 </x-administrator-app-layout>
