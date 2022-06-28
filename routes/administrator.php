@@ -11,65 +11,44 @@ use App\Http\Controllers\Administrator\Auth\VerifyEmailController;
 use App\Http\Controllers\Administrator\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('administrator')->name('administrator.')->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index'])
-        ->middleware('auth:administrator');
+Route::group(['prefix' => 'administrator', 'as' => 'administrator.'], function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->middleware('auth:administrator')
-        ->name('dashboard');
+    Route::group(['middleware' => ['auth:administrator']], function () {
 
-    Route::get('/register', [RegisteredUserController::class, 'create'])
-        ->middleware('guest:administrator')
-        ->name('register');
+        Route::get('/', [DashboardController::class, 'index']);
 
-    Route::post('/register', [RegisteredUserController::class, 'store'])
-        ->middleware('guest:administrator');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-        ->middleware('guest:administrator')
-        ->name('login');
+        Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
 
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-        ->middleware('guest:administrator');
+        Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
 
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->middleware('guest:administrator')
-        ->name('password.request');
+        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware(['throttle:6,1'])
+            ->name('verification.send');
 
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->middleware('guest:administrator')
-        ->name('password.email');
+        Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
 
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->middleware('guest:administrator')
-        ->name('password.reset');
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    });
 
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])
-        ->middleware('guest:administrator')
-        ->name('password.update');
+    Route::group(['middleware' => ['guest:administrator']], function () {
 
-    Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
-        ->middleware('auth:administrator')
-        ->name('verification.notice');
+        Route::post('/register', [RegisteredUserController::class, 'store']);
 
-    Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-        ->middleware(['auth:administrator', 'signed', 'throttle:6,1'])
-        ->name('verification.verify');
+        Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware(['auth:administrator', 'throttle:6,1'])
-        ->name('verification.send');
+        Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->middleware('auth:administrator')
-        ->name('password.confirm');
+        Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
 
-    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
-        ->middleware('auth:administrator');
+        Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->middleware('auth:administrator')
-        ->name('logout');
+        Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+
+        Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
+    });
 });
