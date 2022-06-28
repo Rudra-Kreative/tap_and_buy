@@ -28,6 +28,6 @@ require __DIR__.'/administrator.php';
 
 Route::middleware('auth:administrator')->prefix('administrator')->name('administrator.')->group(function(){
     Route::prefix('category')->name('category.')->group(function(){
-        Route::get('/{category:slug}/show' , [CategoryController::class,'show'])->name('show');
+        Route::get('/' , [CategoryController::class,'index'])->name('view');
     });
 });

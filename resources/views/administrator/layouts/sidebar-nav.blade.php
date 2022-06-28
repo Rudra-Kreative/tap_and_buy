@@ -35,7 +35,23 @@
             <i class="right fas fa-angle-left"></i>
           </p>
         </a>
-        <x-admin.business-category/>
+        
+<ul class="nav nav-treeview">
+  <li class="nav-item">
+      <a href="./index.html" class="nav-link">
+        <i class="fas fa-plus nav-icon"></i>
+        <p>Create</p>
+      </a>
+    </li>
+  <li class="nav-item">
+      <a href="{{ route('administrator.category.view') }}" class="nav-link">
+        <i class="fas fa-eye nav-icon"></i>
+        <p>Show</p>
+      </a>
+    </li>
+
+  
+</ul>
       </li>
       
     </ul>

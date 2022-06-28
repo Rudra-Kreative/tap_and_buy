@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function show(Category $category)
+    public function index()
     {
-        dd($category->with(['childs'])->find($category->id));
+
+        return view('administrator.category.show');
     }
 }
