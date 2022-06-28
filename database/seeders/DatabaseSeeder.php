@@ -25,20 +25,24 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::factory(1500)->create();
-        // User::factory(95)->create([
-        //     'role' => 2
-        // ]);
+        User::factory(1000)->create(
+            [
+                'role' => 1
+            ]
+        );
+        User::factory(95)->create([
+            'role' => 2
+        ]);
 
-        $catOne = Category::factory(2)->create([
+        $catOne = Category::factory(7)->create([
             'created_by' => 'administrators',
         ]);
-        $catTwo = Category::factory(3)->create([
+        $catTwo = Category::factory(22)->create([
             'created_by' => 'users',
         ]);
 
-        Business::factory(25)->create();
+        Business::factory(35)->create();
 
-        Product::factory(255)->create();
+        Product::factory(555)->create();
     }
 }
