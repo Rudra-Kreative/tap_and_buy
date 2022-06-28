@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administrator\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,10 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/administrator.php';
+
+
+Route::middleware('auth:administrator')->prefix('administrator')->name('administrator.')->group(function(){
+    Route::prefix('category')->name('category.')->group(function(){
+        Route::get('/' , [CategoryController::class,'index'])->name('view');
+    });
+});

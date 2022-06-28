@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->enum('created_by',['administrators','users'])->default('administrators');
             $table->unsignedBigInteger('created_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->boolean('is_active')->default(TRUE);
             $table->softDeletes();
             $table->timestamps();

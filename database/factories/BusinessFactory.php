@@ -23,7 +23,7 @@ class BusinessFactory extends Factory
             'website' => $this->faker->url(),
             'service_form' => rand(0,12).' '.$this->faker->amPm(),
             'service_to' => rand(0,12).' '.$this->faker->amPm(),
-            'category_id' => rand(1,5),
+            'category_id' => rand(1,25),
             'user_id' => rand(1,5)
         ];
     }
