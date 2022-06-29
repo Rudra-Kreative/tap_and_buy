@@ -24,8 +24,8 @@ class BusinessCategory extends Component
      */
     public function render()
     {
-        $categories = Category::with(['childs'])->orderBy('created_at','DESC')->get();
-        
+        $categories = Category::with(['childs'])->orderBy('created_at', 'DESC')->get();
+
         return view('components.admin.business-category')->withCategories($categories);
     }
 }

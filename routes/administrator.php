@@ -8,8 +8,10 @@ use App\Http\Controllers\Administrator\Auth\NewPasswordController;
 use App\Http\Controllers\Administrator\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Administrator\Auth\RegisteredUserController;
 use App\Http\Controllers\Administrator\Auth\VerifyEmailController;
+use App\Http\Controllers\Administrator\BusinessController;
 use App\Http\Controllers\Administrator\DashboardController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::group(['prefix' => 'administrator', 'as' => 'administrator.'], function () {
@@ -22,20 +24,22 @@ Route::group(['prefix' => 'administrator', 'as' => 'administrator.'], function (
 
         Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
 
-        Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-            ->middleware(['signed', 'throttle:6,1'])
-            ->name('verification.verify');
+        Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
-        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-            ->middleware(['throttle:6,1'])
-            ->name('verification.send');
+        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware(['throttle:6,1'])->name('verification.send');
 
         Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+        // Admin businesses CRUD
+        Route::get('/businesses_list', [BusinessController::class, 'index'])->name('businesses_list');
     });
 
     Route::group(['middleware' => ['guest:administrator']], function () {
+
+
+        Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 
         Route::post('/register', [RegisteredUserController::class, 'store']);
 

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
+    {{ $extraCSS }}
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -24,17 +25,21 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__wobble" src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
+                height="60" width="60">
         </div>
+
         @include('administrator.layouts.navigation')
+
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ Config::get('app.name', 'Tap & Buy'); }}</span>
+                <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">{{ Config::get('app.name', 'Tap & Buy') }}</span>
             </a>
+
             @include('administrator.layouts.sidebar-nav')
 
         </aside>
@@ -91,8 +96,9 @@
     <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('admin/dist/js/pages/dashboard2.js') }}"></script>
+
+
+    {{ $extraFooterScript }}
 </body>
 
 </html>
