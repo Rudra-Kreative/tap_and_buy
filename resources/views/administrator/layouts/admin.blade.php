@@ -15,6 +15,10 @@
     <!-- CSS Links -->
     @include('administrator.inc.css_links')
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+
     <!-- Custom CSS -->
     @yield('admin_css')
 </head>

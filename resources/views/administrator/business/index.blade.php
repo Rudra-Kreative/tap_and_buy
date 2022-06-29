@@ -20,6 +20,8 @@
                     <h3 class="card-title">Add Business</h3>
                 </div>
 
+
+
                 <form action="{{ route('administrator.businesse_create') }}" method="POST">
                     @csrf
 
@@ -148,17 +150,19 @@
                         if (resp.category !== null) {
                             $('#subcat').html(resp.category);
                         } else {
-                            $('#subcat').html(resp.category); 
+                            $('#subcat').html(resp.category);
                         }
                     }
                 });
             });
 
-            Swal.fire(
-              'Good job!',
-              'You clicked the button!',
-              'success'
-            )
+            @if (Session::has('success'))
+                Swal.fire(
+                    'Good job!',
+                    "{{ Session::get('success') }}",
+                    'success'
+                )
+            @endif
 
         });
     </script>

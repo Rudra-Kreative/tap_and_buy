@@ -66,6 +66,22 @@ class BusinessController extends Controller
         $obj->category_id = $r->subcat;
         $obj->user_id = auth()->user()->id;
         $obj->save();
+
+        return redirect()->route('administrator.businesses_add')->with('success', 'Business created successfully');
+    }
+
+    public function business_list()
+    {
+        $business = Business::where('is_active', 1)->where('deleted_at', null)->get();
+        return view('administrator.business.list', ['business' => $business]);
+    }
+
+
+    public function business_delete($id)
+    {
+        $del = Business::find($id);
+        $obj = $del->delete();
+        return redirect()->route('administrator.business_list')->with('success', 'Business deleted successfully');
     }
 }
 

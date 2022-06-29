@@ -36,6 +36,8 @@ Route::group(['prefix' => 'administrator', 'as' => 'administrator.'], function (
         Route::get('/businesses_add', [BusinessController::class, 'add_business'])->name('businesses_add');
         Route::post('/fetch_subcat', [BusinessController::class, 'fetch_subcat'])->name('fetch_subcat');
         Route::post('/businesse_create', [BusinessController::class, 'businesse_create'])->name('businesse_create');
+        Route::get('/business_list', [BusinessController::class, 'business_list'])->name('business_list');
+        Route::get('/business_delete/{id}', [BusinessController::class, 'business_delete'])->name('business_delete');
     });
 
     Route::group(['middleware' => ['guest:administrator']], function () {
