@@ -33,7 +33,9 @@ Route::group(['prefix' => 'administrator', 'as' => 'administrator.'], function (
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
         // Admin businesses CRUD
-        Route::get('/businesses_list', [BusinessController::class, 'index'])->name('businesses_list');
+        Route::get('/businesses_add', [BusinessController::class, 'add_business'])->name('businesses_add');
+        Route::post('/fetch_subcat', [BusinessController::class, 'fetch_subcat'])->name('fetch_subcat');
+        Route::post('/businesse_create', [BusinessController::class, 'businesse_create'])->name('businesse_create');
     });
 
     Route::group(['middleware' => ['guest:administrator']], function () {
