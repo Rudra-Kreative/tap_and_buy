@@ -70,6 +70,9 @@
     <!-- JS Links -->
     @include('administrator.inc.js_links')
 
+    <!-- sweetalert JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.19/dist/sweetalert2.all.min.js"></script>
+
     <!-- Custom JS -->
     @yield('admin_js')
 </body>
