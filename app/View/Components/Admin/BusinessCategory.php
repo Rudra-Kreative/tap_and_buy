@@ -2,7 +2,9 @@
 
 namespace App\View\Components\Admin;
 
+use App\Http\Controllers\Administrator\CategoryController;
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\View\Component;
 
 class BusinessCategory extends Component
@@ -24,8 +26,9 @@ class BusinessCategory extends Component
      */
     public function render()
     {
-        $categories = Category::with(['childs'])->orderBy('created_at','DESC')->get();
-        
-        return view('components.admin.business-category')->withCategories($categories);
+        $categories = CategoryController::getCategories();
+
+        return view('components.admin.business-category',['categories'=>$categories]);
     }
+    
 }
