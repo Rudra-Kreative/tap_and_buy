@@ -7,10 +7,46 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
+                    <li class="breadcrumb-item active">Category</li>
                 </ol>
             </div><!-- /.col -->
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-block btn-primary btn-lg mt-4" id="category_create"
+                    style="width: 100px">Create</button>
+
+                <div id="category_form_div" style="{{ $errors->any() ? 'display: block' : 'display:none' }}">
+                    <form action="{{ route('administrator.category.store') }}" method="POST">
+                        @csrf
+                        
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="name" required id="name"
+                                    placeholder="Enter category name">
+                                @error('name')
+                                    <span style="color: red">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Slug</label>
+                                <input type="text" class="form-control" name="slug" id="slug"
+                                    placeholder="Enter unique slug">
+                                @error('slug')
+                                    <span style="color: red">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer" style="background-color: none">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.col -->
+
         </div><!-- /.row -->
     </x-slot>
-    
+    <x-admin.business-category />
 </x-administrator-app-layout>
