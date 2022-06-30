@@ -28,13 +28,28 @@ require __DIR__.'/administrator.php';
 
 
 Route::middleware('auth:administrator')->prefix('administrator')->name('administrator.')->group(function(){
+    
+    //category
+    
     Route::prefix('category')->name('category.')->group(function(){
         Route::get('/' , [CategoryController::class,'index'])->name('view');
         Route::post('/store' , [CategoryController::class,'store'])->name('store');
         Route::delete('/{category}/delete' ,[CategoryController::class ,'destroy'])->name('delete');
         Route::put('/{category}/update' , [CategoryController::class,'update'])->name('update');
     });
+
+
+    //sub-category
     Route::prefix('sub-category')->name('sub-category.')->group(function(){
         Route::get('/' , [SubCategoryController::class,'index'])->name('view');
     });
+
+
+    //users
+    Route::prefix('user')->name('user')->group(function(){
+
+        
+        
+    });
+    
 });

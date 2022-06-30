@@ -116,6 +116,10 @@ $(document).ready(function () {
         })
 
     });
+
+    $(document).on('click','#user-direct',function(){
+        
+    });
 });
 
 
