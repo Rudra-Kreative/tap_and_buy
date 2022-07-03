@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Administrator;
 use App\Models\Business;
 use App\Models\Category;
 use App\Models\Product;
@@ -35,10 +36,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $catOne = Category::factory(7)->create([
-            'created_by' => 'administrators',
+            'created_by' => 'administrator',
+            'created_id' => 1
         ]);
         $catTwo = Category::factory(22)->create([
-            'created_by' => 'users',
+            'created_by' => 'user',
         ]);
 
         Business::factory(35)->create();

@@ -4,17 +4,20 @@ namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\View\Components\Admin\BusinessCategory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:administrator');
+    }
     public function index()
     {
 
-        return view('administrator.category.show');
+        return view('administrator.category.show', ['categories' => $this->getCategories()]);
     }
 
     public function store(Request $request)
@@ -48,39 +51,49 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-       $this->validate($request , [
-        'name' =>'required'
-       ]);
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
 
-       $category->name = $request->name;
-       $category->save();
-       
-       return ['res' => TRUE, 'msg' => 'Updated successfully!!', 'data' => $this->getCategories()];
+        $category->name = $request->name;
+        $category->save();
 
+        return ['res' => TRUE, 'msg' => 'Updated successfully!!', 'data' => $this->getCategories()];
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-
+        $category->childs()->delete();
         if ($category->trashed()) {
-            return ['res' => TRUE, 'msg' => 'Category has been successfully deleted!!', 'data' => $this->getCategories()];
+            return ['res' => TRUE, 'msg' => 'Category has been successfully deleted!!', 'data' => $this->getCategories(true)];
         }
         return ['res' => TRUE, 'msg' => 'Category could not be deleted!!'];
     }
 
+    public function deactive(Category $category)
+    {
+        $category->is_active = false;
+        $category->save();
+
+        $category->childs()->update(['is_active'=>false]);
+
+        return ['res' => TRUE, 'msg' => 'Selected Category has been suspended!!'];
+    }
+
     public static function getCategories($timezoneFormat = TRUE)
     {
-        $categories = Category::with(['childs'])->whereNull('parent_id')->orderBy('id')->get();
-
-        $categories->filter(
-            function ($k) {
-
-                $k->created_at = !empty(auth()->user()->timezone) ?
-                    $k->created_at->setTimezone(auth()->user()->timezone)
-                    : $k->created_at->setTimezone(geoip()->getLocation(request()->ip()));
+        $categories = Category::with(['childs', 'user', 'administrator'])->whereNull('parent_id')->orderBy('id','ASC')->get();
+        
+        $categories->filter(function ($k) use ($timezoneFormat) {
+            if ($k->created_by == 'user') {
+                $k->created_by = $k->user->name;
+                
+                if ($timezoneFormat) {
+                    $k->created_at = formatTimezone($k->created_at);
+                }
             }
-        );
+        });
         
         return $categories;
     }

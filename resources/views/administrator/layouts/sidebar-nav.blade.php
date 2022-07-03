@@ -7,7 +7,7 @@
                  style="height: 50px;width: 50px" alt="User Image">
          </div>
          <div class="info">
-             <a href="#" class="d-block">{{ Auth::guard('administrator')->user()->name }}</a>
+             <a href="{{ route('administrator.dashboard') }}" class="d-block">{{ Auth::guard('administrator')->user()->name }}</a>
          </div>
      </div>
 
@@ -29,7 +29,7 @@
              <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
              <li class="nav-item ">
-                 <a href="#" class="nav-link active">
+                 <a href="{{ route('administrator.dashboard') }}" class="nav-link active">
                      <i class="nav-icon fas fa-tachometer-alt"></i>
                      <p>
                          Dashboard
@@ -39,7 +39,7 @@
              </li>
              <li class="nav-item ">
                  <a href="#" class="nav-link ">
-                     <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="fas fa-list-alt"></i>
                      <p>
                          Categories
                          <i class="right fas fa-angle-left"></i>

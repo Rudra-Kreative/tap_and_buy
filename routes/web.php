@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administrator\AdminUserController;
 use App\Http\Controllers\Administrator\CategoryController;
 use App\Http\Controllers\Administrator\SubCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
         Route::post('/store' , [CategoryController::class,'store'])->name('store');
         Route::delete('/{category}/delete' ,[CategoryController::class ,'destroy'])->name('delete');
         Route::put('/{category}/update' , [CategoryController::class,'update'])->name('update');
+        Route::post('/{category}/suspend' , [CategoryController::class,'deactive'])->name('suspend');
     });
 
 
@@ -46,9 +48,10 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
 
 
     //users
-    Route::prefix('user')->name('user')->group(function(){
+    Route::prefix('user')->name('user.')->group(function(){
 
-        
+        Route::get('/owner',[AdminUserController::class,'index'])->name('owner.list');
+        Route::get('/client',[AdminUserController::class,'index'])->name('client.list');
         
     });
     

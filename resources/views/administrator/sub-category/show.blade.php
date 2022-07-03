@@ -1,4 +1,7 @@
 <x-administrator-app-layout>
+    <x-slot name="addOnCss">
+
+    </x-slot>
     <x-slot name='header'>
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -14,4 +17,7 @@
     </x-slot>
     
     <x-admin.business-sub-category/>
+    <x-slot name="addOnJs">
+        
+    </x-slot>
 </x-administrator-app-layout>

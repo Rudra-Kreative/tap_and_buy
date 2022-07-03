@@ -1,4 +1,7 @@
 <x-administrator-app-layout>
+    <x-slot name="addOnCss">
+
+    </x-slot>
     <x-slot name='header'>
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -6,7 +9,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('administrator.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Category</li>
                 </ol>
             </div><!-- /.col -->
@@ -39,7 +42,7 @@
                         </div>
                         <!-- /.card-body -->
 
-                        <div class="card-footer" style="background-color: none">
+                        <div style="padding: .75rem 1.25rem;">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
@@ -48,5 +51,9 @@
 
         </div><!-- /.row -->
     </x-slot>
-    <x-admin.business-category />
+    <x-admin.business-category :categories="$categories"/>
+
+    <x-slot name="addOnJs">
+        <script src="{{ asset('admin/dist/js/pages/category.js') }}"></script>
+    </x-slot>
 </x-administrator-app-layout>

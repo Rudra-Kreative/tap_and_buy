@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class CategoryFactory extends Factory
             'name' => $this->faker->name(),
             'slug' => $this->faker->slug(),
             'created_by' => '',
-            'created_id' => rand(1,5)
+            'created_id' => User::where('role',2)->inRandomOrder()->first()->id
         ];
     }
 }
