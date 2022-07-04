@@ -1,6 +1,5 @@
 $(document).ready(function () {
-    $('#category_table').DataTable();
-    $('#sub_category_table').DataTable();
+    
     $('#business_owner_table').DataTable();
 
     $(document).on('click','#user-direct',function(){
@@ -24,21 +23,3 @@ $(document).ready(function () {
     
 });
 
-function __call(__e)
-{
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        type: __e.method ?? '',
-        url: __e.target ?? '',
-        data: __e.data ?? '',
-        dataType: __e.type ?? '',
-        success: function (response) {
-            return response;
-        }
-    });
-}

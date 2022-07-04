@@ -14,7 +14,7 @@ $(document).on('click', '.editCategory', function () {
 
     Swal.fire({
         title: 'Edit Category',
-        html: `<input type="text" id="category_name" class="swal2-input" value="` + $(this).closest('tr').children('td:first').text() + `" name="name" placeholder="Username">
+        html: `<input type="text" id="category_name" class="swal2-input" value="` + $(this).closest('tr').children('td:first').text() + `" name="name" placeholder="Category name">
     `,
         confirmButtonText: 'Update',
         focusConfirm: false,
@@ -144,7 +144,9 @@ $(document).on('click','.suspendCategory',function(){
             };
         
             response = __call(payload);
-            console.log(response);
+            tableBody = preapreCategoryTable(response.data);
+            $('#category_body').html(tableBody);
+            $('#category_table').DataTable();
 
         }
     })

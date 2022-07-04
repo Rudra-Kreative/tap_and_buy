@@ -44,6 +44,10 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
     //sub-category
     Route::prefix('sub-category')->name('sub-category.')->group(function(){
         Route::get('/' , [SubCategoryController::class,'index'])->name('view');
+        Route::post('/store' , [SubCategoryController::class,'store'])->name('store');
+        Route::delete('/{category}/delete' ,[SubCategoryController::class ,'destroy'])->name('delete');
+
+
     });
 
 
