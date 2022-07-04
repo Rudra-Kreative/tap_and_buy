@@ -14,10 +14,14 @@ class CategoryController extends Controller
     {
         $this->middleware('auth:administrator');
     }
-    public function index()
+    public function index(Request $request)
     {
-
-        return view('administrator.category.show', ['categories' => $this->getCategories()]);
+        
+        if(!empty($request->onlyData))
+        {
+            return ['res'=>true,'categories'=>$this->getCategories(true)];
+        }
+        return view('administrator.category.show', ['categories' => $this->getCategories(true)]);
     }
 
     public function store(Request $request)
