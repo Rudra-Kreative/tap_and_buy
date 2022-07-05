@@ -19,7 +19,7 @@
                 <td data-subCategoryId="{{ $subCategory->id }}">
                     <i class="fa fa-trash deleteSubCategory" title="Delete" style="margin-right: 20px;cursor: pointer;" aria-hidden="true"></i>
                     <i class="fa fa-edit editSubCategory" title="Edit" style="cursor: pointer;margin-right: 20px" aria-hidden="true"></i>
-                    <i class="fa fa-ban" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>
+                    <i class="fa fa-ban suspendSubCategory" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>
                 </td>
             </tr>
         @endforeach

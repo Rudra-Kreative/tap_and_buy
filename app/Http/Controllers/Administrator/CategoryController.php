@@ -82,7 +82,7 @@ class CategoryController extends Controller
 
         $category->childs()->update(['is_active'=>false]);
 
-        return ['res' => TRUE, 'msg' => 'Selected Category has been suspended!!'];
+        return ['res' => TRUE, 'msg' => 'Selected Category has been suspended!!','data' => $this->getCategories(true)];
     }
 
     public static function getCategories($timezoneFormat = TRUE)
