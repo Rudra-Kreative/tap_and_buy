@@ -20,7 +20,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $tzs = timezone_identifiers_list();
+        return view('auth.register',['tzs'=> $tzs]);
     }
 
     /**
