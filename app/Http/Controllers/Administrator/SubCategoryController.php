@@ -67,38 +67,20 @@ class SubCategoryController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request, Category $category)
     {
-        //
-    }
+        
+        $this->validate($request, [
+            'name' => 'required',
+            'parent' => 'required | exists:categories,id'
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $category->name = $request->name;
+        $category->parent_id = $request->parent;
+        $category->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return ['res' => TRUE, 'msg' => 'Sub Category has been updated successfully!!', 'data' => $this->getSubCategories(true)];
+
     }
 
     /**
@@ -117,9 +99,19 @@ class SubCategoryController extends Controller
         return ['res' => FALSE, 'msg' => 'Sub Category could not be deleted!!'];
     }
 
+
+    public function deactive(Category $category)
+    {
+        $category->is_active = false;
+        $category->save();
+
+
+        return ['res' => TRUE, 'msg' => 'Selected Sub-Category has been suspended!!','data' => $this->getSubCategories(true)];
+    }
+
     public function getSubCategories($timezoneFormat = TRUE)
     {
-        $subCategories = Category::with(['parent'])->whereNotNull('parent_id')->orderBy('created_at', 'DESC')->get();
+        $subCategories = Category::with(['parent'])->whereNotNull('parent_id')->where('is_active' , TRUE)->orderBy('created_at', 'DESC')->get();
 
             $subCategories->filter(function ($k) use ($timezoneFormat) {
                 if ($k->created_by == 'user') {

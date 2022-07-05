@@ -46,7 +46,8 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
         Route::get('/' , [SubCategoryController::class,'index'])->name('view');
         Route::post('/store' , [SubCategoryController::class,'store'])->name('store');
         Route::delete('/{category}/delete' ,[SubCategoryController::class ,'destroy'])->name('delete');
-
+        Route::put('/{category}/update' ,[SubCategoryController::class ,'update'])->name('update');
+        Route::put('/{category}/suspend' , [SubCategoryController::class,'deactive'])->name('suspend');
 
     });
 
