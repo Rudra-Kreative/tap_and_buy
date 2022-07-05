@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administrator\AdminOwnerController;
 use App\Http\Controllers\Administrator\AdminUserController;
 use App\Http\Controllers\Administrator\CategoryController;
 use App\Http\Controllers\Administrator\SubCategoryController;
@@ -51,12 +52,20 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
 
     });
 
+    //owner
+
+    Route::prefix('owner')->name('owner.')->group(function(){
+
+        Route::get('/',[AdminOwnerController::class,'index'])->name('view');
+       
+        
+    });
 
     //users
     Route::prefix('user')->name('user.')->group(function(){
 
-        Route::get('/owner',[AdminUserController::class,'index'])->name('owner.list');
-        Route::get('/client',[AdminUserController::class,'index'])->name('client.list');
+        Route::get('/owner',[AdminOwnerController::class,'index'])->name('owner.list');
+       
         
     });
     
