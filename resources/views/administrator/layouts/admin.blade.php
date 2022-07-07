@@ -15,10 +15,6 @@
     <!-- CSS Links -->
     @include('administrator.inc.css_links')
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-
-
     <!-- Custom CSS -->
     @yield('admin_css')
 </head>
@@ -46,7 +42,7 @@
             </a>
 
             <!-- sidebar -->
-            @include('administrator.inc.sidebar')
+            @include('administrator.layouts.sidebar-nav')
 
         </aside>
 
@@ -76,6 +72,9 @@
 
     <!-- sweetalert JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.19/dist/sweetalert2.all.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
     <!-- Custom JS -->
     @yield('admin_js')
