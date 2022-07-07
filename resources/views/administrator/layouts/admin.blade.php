@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Tap & Buy') }}</title>
+    <title>
+        @isset($title)
+            {{ $title }}
+        @endisset
+    </title>
 
-    {{-- include common CSS for admin panel --}}
-    @include('administrator.layouts.css.common-css')
-    {{-- Use page wise dynamic CSS using slot name --}}
-    {{ $addOnCss }}
+    <!-- CSS Links -->
+    @include('administrator.inc.css_links')
+
+    <!-- Custom CSS -->
+    @yield('admin_css')
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -23,59 +28,56 @@
                 height="60" width="60">
         </div>
 
-        @include('administrator.layouts.navigation')
+        @include('administrator.inc.nav')
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <!-- Brand Logo -->
-            <a href="{{ route('administrator.dashboard') }}" class="brand-link">
+            <a href="index3.html" class="brand-link">
                 <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ Config::get('app.name', 'Tap & Buy') }}</span>
+                <span class="brand-text font-weight-light">
+                    {{ Config::get('app.name', 'Tap & Buy') }}
+                </span>
             </a>
 
+            <!-- sidebar -->
             @include('administrator.layouts.sidebar-nav')
 
         </aside>
+
         <div class="content-wrapper">
 
-            <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
-                    {{ $header }}
-                </div><!-- /.container-fluid -->
+                    @yield('title')
+                </div>
             </div>
 
+            <!-- Dynamic content -->
             <section class="content">
                 <div class="container-fluid">
-                    {{ $slot }}
+                    @yield('content')
                 </div>
             </section>
 
         </div>
 
+        <!-- Footer content -->
         @include('administrator.layouts.footer')
     </div>
 
-    @if (session()->has('success'))
-        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
-            class="fixed bg-blue-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif
+    <!-- JS Links -->
+    @include('administrator.inc.js_links')
 
+    <!-- sweetalert JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.19/dist/sweetalert2.all.min.js"></script>
 
-    @if (session()->has('fail'))
-        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
-            class="fixed bg-red-500 text-white py-2 px-4 rounded-xl bottom-3 right-3 text-sm">
-            <p>{{ session('fail') }}</p>
-        </div>
-    @endif
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
-    {{-- include common JS for admin panel --}}
-    @include('administrator.layouts.js.common-js')
-    {{-- Use page wise dynamic js using slot name --}}
-    {{ $addOnJs }}
+    <!-- Custom JS -->
+    @yield('admin_js')
 </body>
 
 </html>
