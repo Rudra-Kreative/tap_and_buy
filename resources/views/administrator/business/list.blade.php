@@ -60,6 +60,7 @@
         <!-- Page level plugins -->
         <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('admin/dist/js/admin.js') }}"></script>
         <script>
             jQuery(document).ready(function($) {
 

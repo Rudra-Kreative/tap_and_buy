@@ -44,7 +44,7 @@
 
                                 <div class="form-group">
                                     <label for="role">Role</label>
-                                    <select name="role" id="role" class="w-full">
+                                    <select name="role" id="role" class="form-control">
                                         <option value="">Business Owner</option>
                                         <option value="">Client</option>
                                     </select>
@@ -88,30 +88,22 @@
                                         <span style="color: red">{{ $occupation }}</span>
                                     @enderror
                                 </div>
-                    
-                                <!-- Timezone -->
-                                <div class="mt-4">
-                                    <x-label for="timezone" :value="__('Select timezone (optional)')" />
-                                    <select name="timezone" id="timezone" class="w-full">
+                                <div class="form-group">
+                                    <label for="timezone">Select timezone (optional)</label>
+                                    <select name="timezone" id="timezone" class="form-control">
                                         <option value="">Select a timezone</option>
                                         @foreach ($tzs as $tz)
                                             <option value="{{ $tz }}">{{ $tz }}</option>
                                         @endforeach
                                     </select>
+                                    @error('occupation')
+                                        <span style="color: red">{{ $occupation }}</span>
+                                    @enderror
                                 </div>
                     
-                                <div class="flex items-center justify-end mt-4">
-                                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                                        {{ __('Already registered?') }}
-                                    </a>
-                    
-                                    <x-button class="ml-4">
-                                        {{ __('Register') }}
-                                    </x-button>
-                            </div>
-                            <!-- /.card-body -->
+                            
     
-                            <div class="card-footer" style="background-color: none">
+                            <div class="" style="background-color: none">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
