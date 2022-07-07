@@ -58,7 +58,7 @@ class BusinessController extends Controller
 
         $obj = new Business();
         $obj->name = $r->business_name;
-        $obj->slug  = $r->business_slug;
+        $obj->slug  = Str::slug($r->business_slug, '_');
         $obj->about  = $r->business_about;
         $obj->website  = $r->business_website;
         $obj->service_form = $r->business_service_form;
@@ -72,10 +72,13 @@ class BusinessController extends Controller
 
     public function business_list()
     {
-        $business = Business::where('is_active', 1)->where('deleted_at', null)->get();
+        $business = Business::where('is_active', 1)
+            ->where('deleted_at', null)
+            ->with('category', 'user')
+            ->get();
+
         return view('administrator.business.list', ['business' => $business]);
     }
-
 
     public function business_delete($id)
     {
@@ -83,13 +86,28 @@ class BusinessController extends Controller
         $obj = $del->delete();
         return redirect()->route('administrator.business_list')->with('success', 'Business deleted successfully');
     }
+
+    public function business_edit()
+    {
+        $bid = $_GET['id'];
+
+        $business = Business::where('is_active', 1)->where('id', $bid)->get();
+
+        $category = Category::where('parent_id', null)->where('is_active', 1)->get();
+
+        foreach ($business as $r) {
+
+            $html['name'] = $r->name;
+            $html['slug'] = $r->slug;
+            $html['about'] = $r->about;
+            $html['website'] = $r->website;
+            $html['service_form'] = $r->service_form;
+            $html['service_to'] = $r->service_to;
+            $html['service_to'] = $r->service_to;
+            $html['category_id'] = $r->category_id;
+            $html['user_id'] = $r->user_id;
+        }
+
+        echo json_encode($html);
+    }
 }
-
-
-// if (auth()->user()->user_role == 1) {
-//     $slug = uniqid();
-// } else if (auth()->user()->user_role == 2) {
-//     $slug = Str::slug($slugUrl, '_');
-// } else {
-//     $slug = uniqid();
-// }

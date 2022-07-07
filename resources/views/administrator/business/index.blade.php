@@ -20,11 +20,8 @@
                     <h3 class="card-title">Add Business</h3>
                 </div>
 
-
-
                 <form action="{{ route('administrator.businesse_create') }}" method="POST">
                     @csrf
-
                     <div class="card-body">
 
                         <div class="row">
