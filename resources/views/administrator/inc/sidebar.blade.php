@@ -16,7 +16,7 @@
 
              <li class="nav-item ">
 
-                 <a href="#" class="nav-link active">
+                 <a href="#" class="nav-link">
                      <i class="nav-icon fas fa-tachometer-alt"></i>
                      <p>
                          Categories
@@ -37,29 +37,29 @@
                              <p>Show</p>
                          </a>
                      </li>
-
-
                  </ul>
              </li>
 
+             {{-- Business Routes --}}
              <li class="nav-item ">
-
-                 <a href="#" class="nav-link active">
-                     <i class="nav-icon fas fa-tachometer-alt"></i>
-                     <p>
-                         Business
-                         <i class="right fas fa-angle-left"></i>
-                     </p>
+                 <a href="#" class="nav-link">
+                     <i class="nav-icon fas fa-briefcase"></i>
+                     <p> Business <i class="right fas fa-angle-left"></i> </p>
                  </a>
 
                  <ul class="nav nav-treeview">
                      <li class="nav-item">
                          <a href="{{ route('administrator.businesses_add') }}" class="nav-link">
-                             <i class="fas fa-eye nav-icon"></i>
-                             <p>Add</p>
+                             <i class="fas fa-plus nav-icon"></i>
+                             <p>Create</p>
                          </a>
                      </li>
-
+                     <li class="nav-item">
+                         <a href="{{ route('administrator.business_list') }}" class="nav-link">
+                             <i class="fas fa-eye nav-icon"></i>
+                             <p>Show</p>
+                         </a>
+                     </li>
                  </ul>
              </li>
 
