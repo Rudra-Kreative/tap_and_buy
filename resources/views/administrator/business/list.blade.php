@@ -74,7 +74,6 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
 
@@ -94,7 +93,7 @@
                         <form action="{{ route('administrator.business_update') }}" method="POST">
                             @csrf
 
-                            <input type="hidden" id="business_id" name="business_id"/>
+                            <input type="hidden" id="business_id" name="business_id" />
 
                             <div class="card-body">
 
@@ -125,7 +124,8 @@
                                         {{-- Business about --}}
                                         <div class="form-group">
                                             <label>Business about</label>
-                                            <textarea class="form-control" rows="3" id="business_about" name="business_about" placeholder="Enter business about"></textarea>
+                                            <textarea class="form-control" rows="3" id="business_about" name="business_about"
+                                                placeholder="Enter business about"></textarea>
                                             @error('business_about')
                                                 <span class="alert alert-danger">{{ $message }}</span>
                                             @enderror
@@ -167,7 +167,8 @@
                                         {{-- Business about --}}
                                         <div class="form-group">
                                             <label>Business website</label>
-                                            <textarea class="form-control" rows="3" id="business_website" name="business_website" placeholder="Enter business site"></textarea>
+                                            <textarea class="form-control" rows="3" id="business_website" name="business_website"
+                                                placeholder="Enter business site"></textarea>
                                             @error('business_website')
                                                 <span class="alert alert-danger">{{ $message }}</span>
                                             @enderror
@@ -200,82 +201,84 @@
                 </div>
             </div>
         </div>
-    @endsection
 
-    @section('admin_js')
-        <!-- Page level plugins -->
-        <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
-        <script>
-            jQuery(document).ready(function($) {
+    </div>
+@endsection
 
-                @if (Session::has('success'))
-                    Swal.fire(
-                        'Good job!',
-                        "{{ Session::get('success') }}",
-                        'success'
-                    )
-                @endif
+@section('admin_js')
+    <!-- Page level plugins -->
+    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script>
+        jQuery(document).ready(function($) {
 
-                $('#table_id').DataTable();
+            @if (Session::has('success'))
+                Swal.fire(
+                    'Good job!',
+                    "{{ Session::get('success') }}",
+                    'success'
+                )
+            @endif
 
-                $('.modalclose').click(function() {
-                    $("#businessEditModal").hide();
-                });
+            $('#table_id').DataTable();
 
-                // business edit
-                $('body').on('click', '.businessEdit', function(event) {
-                    event.preventDefault();
-                    var id = $(this).attr("data-eid");
-
-                    $.ajax({
-                        url: '{{ route('administrator.business_edit') }}',
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {
-                            id: id
-                        },
-                        success: function(resp) {
-                            console.log(resp); 
-                            $("#businessEditModal").show();
-                            $("#business_id").val(resp.id);
-                            $("#business_name").val(resp.name);
-                            $("#business_slug").val(resp.slug);
-                            $("#business_about").val(resp.about);
-                            $("#business_website").val(resp.website);
-                            $("#business_service_form").val(resp.service_form);
-                            $("#business_service_to").val(resp.service_to);
-
-                            $("#cat").html(resp.category);
-                            $("#subcat").html(resp.sub_category);
-                        }
-                    });
-                });
-
-                // Fetch business category
-                $('body').on('click', '#cat', function() {
-
-                    let cid = $(this).val();
-
-                    $.ajax({
-                        url: "{{ route('administrator.fetch_subcat') }}",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id: cid
-                        },
-                        success: function(resp) {
-                            console.log(resp);
-                            if (resp.category !== null) {
-                                $('#subcat').html(resp.category);
-                            } else {
-                                $('#subcat').html(resp.category);
-                            }
-                        }
-                    });
-                });
-
+            $('.modalclose').click(function() {
+                $("#businessEditModal").hide();
             });
-        </script>
-    @endsection
+
+            // business edit
+            $('body').on('click', '.businessEdit', function(event) {
+                event.preventDefault();
+                var id = $(this).attr("data-eid");
+
+                $.ajax({
+                    url: '{{ route('administrator.business_edit') }}',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function(resp) {
+                        console.log(resp);
+                        $("#businessEditModal").show();
+                        $("#business_id").val(resp.id);
+                        $("#business_name").val(resp.name);
+                        $("#business_slug").val(resp.slug);
+                        $("#business_about").val(resp.about);
+                        $("#business_website").val(resp.website);
+                        $("#business_service_form").val(resp.service_form);
+                        $("#business_service_to").val(resp.service_to);
+
+                        $("#cat").html(resp.category);
+                        $("#subcat").html(resp.sub_category);
+                    }
+                });
+            });
+
+            // Fetch business category
+            $('body').on('click', '#cat', function() {
+
+                let cid = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('administrator.fetch_subcat') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: cid
+                    },
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.category !== null) {
+                            $('#subcat').html(resp.category);
+                        } else {
+                            $('#subcat').html(resp.category);
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+@endsection
