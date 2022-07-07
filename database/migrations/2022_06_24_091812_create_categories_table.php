@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->enum('created_by',['administrators','users'])->default('administrators');
+            $table->enum('created_by',['administrator','user'])->default('administrator');
             $table->unsignedBigInteger('created_id');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->boolean('is_active')->default(TRUE);

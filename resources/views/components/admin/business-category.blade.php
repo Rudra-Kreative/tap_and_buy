@@ -1,18 +1,26 @@
+@props(['categories'=>$categories])
 
-<ul class="nav nav-treeview">
-    <li class="nav-item">
-        <a href="./index.html" class="nav-link">
-          <i class="fas fa-plus nav-icon"></i>
-          <p>Create</p>
-        </a>
-      </li>
-    @foreach ($categories as $category)
-    <li class="nav-item">
-        <a href="{{ route('administrator.category.show',[$category->slug]) }}" class="nav-link">
-          {{-- <i class="fas fa-circle nav-icon"></i> --}}
-          <p>{{ $category->name }}</p>
-        </a>
-      </li>
-    @endforeach
-    
-  </ul>
+<table id="category_table" class="display" data-target="{{ url('/administrator/category') }}">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Created By</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="category_body" >
+        @foreach ($categories as $category)
+            <tr>
+                <td>{{ $category->name }}</td>
+                <td>{{ Str::ucfirst($category->created_by) }}</td>
+                <td>{{$category->created_at}}</td>
+                <td data-categoryId="{{ $category->id }}">
+                    <i class="fa fa-trash deleteCategory" title="Delete"   style="margin-right: 20px;cursor: pointer;" aria-hidden="true"></i>
+                    <i class="fa fa-edit editCategory" title="Edit" style="cursor: pointer;margin-right: 20px" aria-hidden="true"></i>
+                    <i class="fa fa-ban suspendCategory" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>

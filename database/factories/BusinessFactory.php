@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,7 @@ class BusinessFactory extends Factory
             'service_form' => rand(0,12).' '.$this->faker->amPm(),
             'service_to' => rand(0,12).' '.$this->faker->amPm(),
             'category_id' => rand(1,25),
-            'user_id' => rand(1,5)
+            'user_id' => User::where('role',2)->inRandomOrder()->first()->id
         ];
     }
 }

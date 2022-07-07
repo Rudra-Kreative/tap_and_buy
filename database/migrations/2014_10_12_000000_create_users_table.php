@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('occupation');
             $table->string('role'); // 1 - buyer 2 -seller/business owner
             $table->string('password');
+            $table->string('timezone')->nullable();
             $table->boolean('is_active')->default(TRUE);
             $table->rememberToken();
             $table->softDeletes();

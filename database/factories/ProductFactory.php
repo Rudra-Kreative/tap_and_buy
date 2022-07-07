@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'slug' => $this->faker->slug(),
             'desc' => $this->faker->paragraph(),
             'price' => $this->faker->randomDigit(),
-            'business_id' => rand(1,25)
+            'business_id' => rand(1,35)
         ];
     }
 }

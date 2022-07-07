@@ -7,7 +7,8 @@
                  style="height: 50px;width: 50px" alt="User Image">
          </div>
          <div class="info">
-             <a href="#" class="d-block">{{ Auth::guard('administrator')->user()->name }}</a>
+             <a href="{{ route('administrator.dashboard') }}"
+                 class="d-block">{{ Auth::guard('administrator')->user()->name }}</a>
          </div>
      </div>
 
@@ -26,11 +27,19 @@
      <!-- Sidebar Menu -->
      <nav class="mt-2">
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-             <!-- Add icons to the links using the .nav-icon class
-           with font-awesome or any other icon font library -->
+
              <li class="nav-item ">
-                 <a href="#" class="nav-link active">
+                 <a href="{{ route('administrator.dashboard') }}" class="nav-link active">
                      <i class="nav-icon fas fa-tachometer-alt"></i>
+                     <p>
+                         Dashboard
+
+                     </p>
+                 </a>
+             </li>
+             <li class="nav-item ">
+                 <a href="#" class="nav-link ">
+                     <i class="fas fa-list-alt"></i>
                      <p>
                          Categories
                          <i class="right fas fa-angle-left"></i>
@@ -38,15 +47,27 @@
                  </a>
 
                  <ul class="nav nav-treeview">
-
-                     <li class="nav-item">
-                         <a href="./index.html" class="nav-link">
-                             <i class="fas fa-plus nav-icon"></i>
-                             <p>Create</p>
-                         </a>
-                     </li>
                      <li class="nav-item">
                          <a href="{{ route('administrator.category.view') }}" class="nav-link">
+                             <i class="fas fa-eye nav-icon"></i>
+                             <p>Show</p>
+                         </a>
+                     </li>
+                 </ul>
+             </li>
+
+             <li class="nav-item ">
+                 <a href="#" class="nav-link ">
+                     <i class="nav-icon fas fa-list"></i>
+                     <p>
+                         Sub-Category
+                         <i class="right fas fa-angle-left"></i>
+                     </p>
+                 </a>
+
+                 <ul class="nav nav-treeview">
+                     <li class="nav-item">
+                         <a href="{{ route('administrator.sub-category.view') }}" class="nav-link">
                              <i class="fas fa-eye nav-icon"></i>
                              <p>Show</p>
                          </a>
@@ -76,7 +97,6 @@
                      </li>
                  </ul>
              </li>
-
          </ul>
      </nav>
      <!-- /.sidebar-menu -->
