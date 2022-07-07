@@ -130,6 +130,7 @@
 @endsection
 
 @section('admin_js')
+<script src="{{ asset('admin/dist/js/admin.js') }}"></script>
     <script>
         jQuery(document).ready(function($) {
 

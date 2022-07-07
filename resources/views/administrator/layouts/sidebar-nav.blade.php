@@ -29,7 +29,7 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
              <li class="nav-item ">
-                 <a href="{{ route('administrator.dashboard') }}" class="nav-link active">
+                 <a href="{{ route('administrator.dashboard') }}" class="nav-link {{ request()->routeIs('administrator.dashboard') ? 'active' : '' }}">
                      <i class="nav-icon fas fa-tachometer-alt"></i>
                      <p>
                          Dashboard
@@ -38,7 +38,7 @@
                  </a>
              </li>
              <li class="nav-item ">
-                 <a href="#" class="nav-link ">
+                 <a href="#" class="nav-link {{ request()->routeIs('administrator.category.view') ? 'active' : '' }}">
                      <i class="fas fa-list-alt"></i>
                      <p>
                          Categories
@@ -57,7 +57,7 @@
              </li>
 
              <li class="nav-item ">
-                 <a href="#" class="nav-link ">
+                 <a href="#" class="nav-link {{ request()->routeIs('administrator.sub-category.view') ? 'active' : '' }}">
                      <i class="nav-icon fas fa-list"></i>
                      <p>
                          Sub-Category
@@ -74,16 +74,16 @@
                      </li>
                  </ul>
              </li>
-
+             
              {{-- Business Routes --}}
              <li class="nav-item ">
-                 <a href="#" class="nav-link">
+                 <a href="#" class="nav-link {{ request()->routeIs('administrator.business_list ') ? 'active' : '' }}">
                      <i class="nav-icon fas fa-briefcase"></i>
                      <p> Business <i class="right fas fa-angle-left"></i> </p>
                  </a>
 
                  <ul class="nav nav-treeview">
-                     <li class="nav-item">
+                     <li class="nav-item ">
                          <a href="{{ route('administrator.businesses_add') }}" class="nav-link">
                              <i class="fas fa-plus nav-icon"></i>
                              <p>Create</p>
@@ -99,7 +99,7 @@
              </li>
 
              <li class="nav-item ">
-                <a href="javascript:void(0)" id="user-direct" class="nav-link ">
+                <a href="javascript:void(0)" id="user-direct" class="nav-link {{ request()->routeIs('administrator.owner.view') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                         Users
