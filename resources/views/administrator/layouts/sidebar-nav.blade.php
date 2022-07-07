@@ -97,6 +97,16 @@
                      </li>
                  </ul>
              </li>
+
+             <li class="nav-item ">
+                <a href="javascript:void(0)" id="user-direct" class="nav-link ">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                        Users
+                        <i class="right fas fa-angle-right"></i>
+                    </p>
+                </a>
+             </li>
          </ul>
      </nav>
      <!-- /.sidebar-menu -->
