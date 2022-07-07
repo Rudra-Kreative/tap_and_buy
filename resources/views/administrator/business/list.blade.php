@@ -13,6 +13,12 @@
         .modal-dialog {
             max-width: 800px;
         }
+
+        span.alert-danger {
+            margin: 5px 0px 0px 0px;
+            padding: 0 5px;
+            display: table;
+        }
     </style>
 @endsection
 
@@ -85,8 +91,11 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="{{ route('administrator.businesse_create') }}" method="POST">
+                        <form action="{{ route('administrator.business_update') }}" method="POST">
                             @csrf
+
+                            <input type="hidden" id="business_id" name="business_id"/>
+
                             <div class="card-body">
 
                                 <div class="row">
@@ -106,7 +115,7 @@
                                         {{-- Business name --}}
                                         <div class="form-group">
                                             <label for="business_name">Business name</label>
-                                            <input type="email" class="form-control" id="business_name"
+                                            <input type="text" class="form-control" id="business_name"
                                                 name="business_name" placeholder="Enter business name" />
                                             @error('business_name')
                                                 <span class="alert alert-danger">{{ $message }}</span>
@@ -227,17 +236,44 @@
                             id: id
                         },
                         success: function(resp) {
-                            console.log(resp);
+                            console.log(resp); 
                             $("#businessEditModal").show();
+                            $("#business_id").val(resp.id);
                             $("#business_name").val(resp.name);
                             $("#business_slug").val(resp.slug);
                             $("#business_about").val(resp.about);
                             $("#business_website").val(resp.website);
                             $("#business_service_form").val(resp.service_form);
                             $("#business_service_to").val(resp.service_to);
+
+                            $("#cat").html(resp.category);
+                            $("#subcat").html(resp.sub_category);
                         }
                     });
+                });
 
+                // Fetch business category
+                $('body').on('click', '#cat', function() {
+
+                    let cid = $(this).val();
+
+                    $.ajax({
+                        url: "{{ route('administrator.fetch_subcat') }}",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: cid
+                        },
+                        success: function(resp) {
+                            console.log(resp);
+                            if (resp.category !== null) {
+                                $('#subcat').html(resp.category);
+                            } else {
+                                $('#subcat').html(resp.category);
+                            }
+                        }
+                    });
                 });
 
             });

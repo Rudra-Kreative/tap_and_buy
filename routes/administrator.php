@@ -39,6 +39,7 @@ Route::group(['prefix' => 'administrator', 'as' => 'administrator.'], function (
         Route::get('/business_list', [BusinessController::class, 'business_list'])->name('business_list');
         Route::get('/business_delete/{id}', [BusinessController::class, 'business_delete'])->name('business_delete');
         Route::get('/business_edit', [BusinessController::class, 'business_edit'])->name('business_edit');
+        Route::post('/business_update', [BusinessController::class, 'business_update'])->name('business_update');
     });
 
     Route::group(['middleware' => ['guest:administrator']], function () {

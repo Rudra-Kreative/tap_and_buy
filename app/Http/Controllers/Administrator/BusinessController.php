@@ -93,10 +93,8 @@ class BusinessController extends Controller
 
         $business = Business::where('is_active', 1)->where('id', $bid)->get();
 
-        $category = Category::where('parent_id', null)->where('is_active', 1)->get();
-
         foreach ($business as $r) {
-
+            $html['id'] = $r->id;
             $html['name'] = $r->name;
             $html['slug'] = $r->slug;
             $html['about'] = $r->about;
@@ -108,6 +106,70 @@ class BusinessController extends Controller
             $html['user_id'] = $r->user_id;
         }
 
+        $category = Category::where('parent_id', null)->where('is_active', 1)->get();
+
+        $fetch_parent_cat = Category::where('id', $html['category_id'])->where('is_active', 1)->first();
+
+        $fetch_sub_cat = Category::where('parent_id', $fetch_parent_cat->parent_id)->where('is_active', 1)->get();
+
+        $html['category'] = '';
+
+        foreach ($category as $item) {
+
+            if ($item->id == $fetch_parent_cat->parent_id) {
+                $selected = 'selected';
+            } else {
+                $selected = '';
+            }
+
+            $html['category'] .= '<option value="' . $item->id . '"  ' . $selected . ' >' . $item->name . '</option>';
+        }
+
+        $html['sub_category'] = '';
+
+        foreach ($fetch_sub_cat as $item) {
+
+            if ($item->id == $fetch_parent_cat->parent_id) {
+                $selected = 'selected';
+            } else {
+                $selected = '';
+            }
+
+            $html['sub_category'] .= '<option value="' . $item->id . '"  ' . $selected . ' >' . $item->name . '</option>';
+        }
+
         echo json_encode($html);
+    }
+
+    public function business_update(Request $r)
+    {
+        $id = $r->business_id;
+
+        $this->validate($r, [
+            'cat' => 'required',
+            'subcat' => 'required',
+
+            'business_name' => 'required',
+            'business_about' => 'required',
+            'business_slug' => 'required',
+            'business_website' => 'required',
+
+            'business_service_form' => 'required',
+            'business_service_to' => 'required',
+        ]);
+
+        $obj = Business::find($id);
+
+        $obj->name = $r->business_name;
+        $obj->slug  = Str::slug($r->business_slug, '_');
+        $obj->about  = $r->business_about;
+        $obj->website  = $r->business_website;
+        $obj->service_form = $r->business_service_form;
+        $obj->service_to = $r->business_service_to;
+        $obj->category_id = $r->subcat;
+        $obj->user_id = auth()->user()->id;
+        $obj->update();
+
+        return redirect()->route('administrator.business_list')->with('success', 'Business updated successfully');
     }
 }
