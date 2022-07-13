@@ -21,6 +21,7 @@ class CategoryController extends Controller
         {
             return ['res'=>true,'categories'=>$this->getCategories(true)];
         }
+        
         return view('administrator.category.show', ['categories' => $this->getCategories(true)]);
     }
 
@@ -62,7 +63,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->save();
 
-        return ['res' => TRUE, 'msg' => 'Updated successfully!!', 'data' => $this->getCategories()];
+        return ['res' => TRUE, 'msg' => 'Updated successfully!!', 'data' => $this->getCategories(true)];
     }
 
     public function destroy(Category $category)
@@ -87,7 +88,7 @@ class CategoryController extends Controller
 
     public static function getCategories($timezoneFormat = TRUE)
     {
-        $categories = Category::with(['childs', 'user', 'administrator'])->whereNull('parent_id')->orderBy('id','ASC')->get();
+        $categories = Category::with(['childs', 'user', 'administrator'])->where(['is_active'=>true])->whereNull('parent_id')->orderBy('id','DESC')->get();
         
         $categories->filter(function ($k) use ($timezoneFormat) {
             if ($k->created_by == 'user') {

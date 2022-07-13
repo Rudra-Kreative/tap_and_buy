@@ -21,6 +21,8 @@ $(document).ready(function () {
         $(window).attr('location','/administrator/user/client')
     });
     
+  
+    
 });
 
 
@@ -32,4 +34,18 @@ function showPreview(event) {
         //preview.style.display = "block";
     }
 }
+
+var Toast = Swal.mixin({
+    target: '#custom-target',
+    customClass: {
+      container: 'position-absolute'
+    },
+    toast: true,
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true
+  });
+
+
 

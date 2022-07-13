@@ -3,7 +3,7 @@
      <!-- Sidebar user panel (optional) -->
      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
          <div class="image">
-             <img src="{{ asset(auth()->user()->image_path) }}" class="img-circle elevation-2"
+             <img src="{{ asset(Auth::guard('administrator')->user()->image_path) }}" class="img-circle elevation-2"
                  style="height: 50px;width: 50px" alt="User Image">
          </div>
          <div class="info">

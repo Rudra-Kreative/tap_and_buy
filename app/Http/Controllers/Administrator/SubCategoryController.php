@@ -72,7 +72,8 @@ class SubCategoryController extends Controller
         
         $this->validate($request, [
             'name' => 'required',
-            'parent' => 'required | exists:categories,id'
+            'parent' => 'required | exists:categories,id',
+            'nothing' =>'required'
         ]);
 
         $category->name = $request->name;
@@ -89,8 +90,9 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category,Request $request )
     {
+        $this->validate($request,['nothing'=>'required']);
         $category->delete();
         $category->childs()->delete();
         if ($category->trashed()) {

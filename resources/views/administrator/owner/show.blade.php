@@ -19,30 +19,32 @@
 
 
                     <div id="business_owner_form_div" style="{{ $errors->any() ? 'display: block' : 'display:none' }}">
-                        <form action="" method="POST">
+                        <form action="{{ route('administrator.owner.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             
                             <div class="card-body">
+
+                                <div class="form-group">
+                                    <img src="https://i.pravatar.cc/150" id="file-dp-1-preview" style="height: 100px; width: 100px;" class="rounded float-right inline mb-4" alt="...">
+                                    
+                                    <input type="file" class="form-control" name="image" required id="image"
+                                        placeholder="Enter category name" onchange="showPreview(event);">
+                                    @error('image')
+                                        <span style="color: red">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" name="name" required id="name"
-                                        placeholder="Enter category name">
+                                        placeholder="Enter business name">
                                     @error('name')
                                         <span style="color: red">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <img src="https://i.pravatar.cc/150" id="file-dp-1-preview" style="height: 100px; width: 100px;" class="rounded float-right inline mb-4" alt="...">
-                                    <label for="image">Image</label>
-                                    <input type="file" class="form-control" name="image" required id="image"
-                                        placeholder="Enter category name" onchange="showPreview(event);">
-                                    @error('image')
-                                        <span style="color: red">{{ $image }}</span>
-                                    @enderror
-                                </div>
+                                
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="role">Role</label>
                                     <select name="role" id="role" class="form-control">
                                         <option value="">Business Owner</option>
@@ -51,12 +53,12 @@
                                     @error('role')
                                         <span style="color: red">{{ $role }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" name="email" required id="email"
-                                        placeholder="Enter your email address">
+                                        placeholder="Enter your email address" value="{{ old('email') }}">
                                     @error('email')
                                         <span style="color: red">{{ $message }}</span>
                                     @enderror
@@ -65,27 +67,27 @@
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
                                     <input type="text" class="form-control" name="phone" required id="phone"
-                                        placeholder="Enter your phone number">
+                                        placeholder="Enter your phone number" value="{{ old('phone') }}">
                                     @error('phone')
-                                        <span style="color: red">{{ $phone }}</span>
+                                        <span style="color: red">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="location">Location</label>
                                     <input type="text" class="form-control" name="location" required id="location"
-                                        placeholder="Enter your location">
+                                        placeholder="Enter your location" value="{{ old('location') }}">
                                     @error('location')
-                                        <span style="color: red">{{ $location }}</span>
+                                        <span style="color: red">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="occupation">Occupation</label>
                                     <input type="text" class="form-control" name="occupation" required id="occupation"
-                                        placeholder="Enter your occupation">
+                                        placeholder="Enter your occupation" value="{{ old('occupation') }}">
                                     @error('occupation')
-                                        <span style="color: red">{{ $occupation }}</span>
+                                        <span style="color: red">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -96,14 +98,14 @@
                                             <option value="{{ $tz }}">{{ $tz }}</option>
                                         @endforeach
                                     </select>
-                                    @error('occupation')
-                                        <span style="color: red">{{ $occupation }}</span>
+                                    @error('timezone')
+                                        <span style="color: red">{{ $message }}</span>
                                     @enderror
                                 </div>
                     
                             
     
-                            <div class="" style="background-color: none">
+                            <div class="owner_form_button" style="background-color: none">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>

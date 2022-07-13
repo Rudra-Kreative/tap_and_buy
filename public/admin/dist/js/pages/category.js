@@ -1,70 +1,103 @@
 $(document).ready(function () {
-    $('#category_table').DataTable();
+    $('#category_table').DataTable({ "order": [] });
+
+
 });
 
 
 //create
 $(document).on('click', '#category_create', function () {
     $('#category_form_div').slideToggle();
+    $(this).text($(this).text() == 'Create' ? 'Close' : 'Create');
 });
 
 //update
 $(document).on('click', '.editCategory', function () {
-    //console.log($(this).closest('tr').children('td:first').text());
 
     Swal.fire({
         title: 'Edit Category',
         html: `<input type="text" id="category_name" class="swal2-input" value="` + $(this).closest('tr').children('td:first').text() + `" name="name" placeholder="Category name">
-    `,
-        confirmButtonText: 'Update',
-        focusConfirm: false,
-        preConfirm: () => {
-            const name = Swal.getPopup().querySelector('#category_name').value
+        `,
+        showCancelButton: true,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        focusConfirm: false
+    });
 
-            if (!name) {
-                Swal.showValidationMessage(`Please enter category name`)
+    $('.swal2-actions').prepend(`<button type='button' id='category_update' class="swal2-confirm swal2-styled" style='display: inline-block;'' aria-label=''>Update</button>`);
+    $('#category_update').attr('data-target', $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-categoryId') + '/update');
+});
+
+$(document).on('click', '#category_update', function () {
+    var editedName = $('#category_name').val();
+    
+    if ((editedName != "") && (editedName !='undefined')) {
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-            return { name: name }
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-categoryId') + '/update',
-                data: { '_method': 'PUT', 'name': $('#category_name').val() },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    if (response.res) {
+        });
 
-                        if (response.data.length) {
-                            $('#category_body').html(preapreCategoryTable(response.data));
-                            $('#category_table').DataTable();
-                            Swal.fire(
-                                'Succeed!',
-                                response.msg,
-                                'success'
-                            )
-                        }
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('data-target'),
+            data: { '_method': 'PUT', 'name': editedName },
+            dataType: "json",
+            cache: false,
+            beforeSend: function () {
+                $('#spinner-loader').fadeIn(100);
+                $('#spinner-loader-text').html('Updating...');
+            },
+            success: function (response) {
 
+                if (response.res) {
+
+                    if (response.data.length) {
+                        $('#category_body').html(preapreCategoryTable(response.data));
+                        $('#category_table').DataTable();
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.msg
+                        })
                     }
-                    else {
-                        Swal.fire(
-                            'Failed!',
-                            response.msg,
-                            'error'
-                        )
-                    }
-                }
-            });
-        }
-    })
 
+                }
+                else {
+                    Toast.fire({
+                        icon: 'error',
+                        title: response.msg
+                    })
+                }
+            },
+            error: function (request, status, error) {
+                responses = jQuery.parseJSON(request.responseText);
+
+                if (responses.errors) {
+                    var errorHtml = '<ul>';
+                    $.each(responses.errors, function (key, value) {
+                        errorHtml += '<li>' + value + '</li>';
+                    });
+                    errorHtml += '</ul>';
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: errorHtml
+                    })
+
+                }
+            },
+            complete: function () {
+                $('#spinner-loader').fadeOut(100);
+            }
+        });
+    }
+    else{
+        Toast.fire({
+            icon: 'error',
+            title: 'Please enter a category name'
+        })
+    }
 });
 
 //destroy
@@ -76,10 +109,11 @@ $(document).on('click', '.deleteCategory', function () {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, delete it!',
+        allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) {
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -90,8 +124,11 @@ $(document).on('click', '.deleteCategory', function () {
                 type: "POST",
                 url: $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-categoryId') + '/delete',
                 data: { '_method': 'delete' },
-
                 dataType: "json",
+                beforeSend: function () {
+                    $('#spinner-loader').fadeIn(100);
+                    $('#spinner-loader-text').html('Deleting...');
+                },
                 success: function (response) {
                     if (response.res) {
                         if (response.data.length) {
@@ -99,21 +136,42 @@ $(document).on('click', '.deleteCategory', function () {
                             $('#category_body').html(tableBody);
                             $('#category_table').DataTable();
 
-                            Swal.fire(
-                                'Succeed!',
-                                response.msg,
-                                'success'
-                            )
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.msg
+                            })
                         }
 
                     }
                     else {
-                        Swal.fire(
-                            'Failed!',
-                            response.msg,
-                            'error'
-                        )
+                        Toast.fire({
+                            icon: 'error',
+                            title: response.msg
+                        })
                     }
+                },
+                error: function (request, status, error) {
+                    responses = jQuery.parseJSON(request.responseText);
+
+                    console.log(responses.errors);
+                    console.log(responses.errors.length);
+
+                    if (responses.errors) {
+                        var errorHtml = '<ul>';
+                        $.each(responses.errors, function (key, value) {
+                            errorHtml += '<li>' + value + '</li>';
+                        });
+                        errorHtml += '</ul>';
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: errorHtml
+                        })
+
+                    }
+                },
+                complete: function () {
+                    $('#spinner-loader').fadeOut(100);
                 }
             });
 
@@ -123,7 +181,7 @@ $(document).on('click', '.deleteCategory', function () {
 
 
 //suspend
-$(document).on('click','.suspendCategory',function(){
+$(document).on('click', '.suspendCategory', function () {
 
     Swal.fire({
         title: 'Are you sure to suspend this category?',
@@ -132,25 +190,74 @@ $(document).on('click','.suspendCategory',function(){
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, suspend it!'
+        confirmButtonText: 'Yes, suspend it!',
+        allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) {
 
-            let payload = {
-                'method' : 'POST',
-                'target' : $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-categoryId') + '/suspend',
-                'data' : {},
-                'type' : 'json'
-            };
-        
-            response = __call(payload);
-            tableBody = preapreCategoryTable(response.data);
-            $('#category_body').html(tableBody);
-            $('#category_table').DataTable();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-categoryId') + '/suspend',
+                data: {},
+                dataType: "json",
+                beforeSend: function () {
+                    $('#spinner-loader').fadeIn(100);
+                    $('#spinner-loader-text').html('Suspending...');
+                },
+                success: function (response) {
+                    if (response.res) {
+                        if (response.data.length) {
+                            tableBody = preapreCategoryTable(response.data);
+                            $('#category_body').html(tableBody);
+                            $('#category_table').DataTable();
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.msg
+                            })
+                        }
+
+                    }
+                    else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: response.msg
+                        })
+                    }
+                },
+                error: function (request, status, error) {
+                    responses = jQuery.parseJSON(request.responseText);
+
+                    if (responses.errors) {
+                        var errorHtml = '<ul>';
+                        $.each(responses.errors, function (key, value) {
+                            errorHtml += '<li>' + value + '</li>';
+                        });
+                        errorHtml += '</ul>';
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: errorHtml
+                        })
+
+                    }
+                },
+                complete: function () {
+                    $('#spinner-loader').fadeOut(100);
+                }
+
+            });
 
         }
     })
-    
+
 });
 
 //common
