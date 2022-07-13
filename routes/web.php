@@ -57,6 +57,9 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
     Route::prefix('owner')->name('owner.')->group(function(){
 
         Route::get('/',[AdminOwnerController::class,'index'])->name('view');
+        Route::post('/store',[AdminOwnerController::class,'store'])->name('store');
+        Route::get('/{user}/edit',[AdminOwnerController::class,'edit'])->name('edit');
+        Route::post('/{user}/update',[AdminOwnerController::class,'update'])->name('update');
        
         
     });

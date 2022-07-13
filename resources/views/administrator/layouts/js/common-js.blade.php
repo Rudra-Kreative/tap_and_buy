@@ -19,6 +19,5 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
 
-<script src="{{ asset('admin/dist/js/admin.js') }}"></script>
-
 <script src="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('admin/dist/js/admin.js') }}"></script>

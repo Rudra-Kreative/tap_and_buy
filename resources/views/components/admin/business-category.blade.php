@@ -11,6 +11,7 @@
     </thead>
     <tbody id="category_body" >
         @foreach ($categories as $category)
+            
             <tr>
                 <td>{{ $category->name }}</td>
                 <td>{{ Str::ucfirst($category->created_by) }}</td>

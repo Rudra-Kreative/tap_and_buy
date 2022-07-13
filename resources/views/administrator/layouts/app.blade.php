@@ -14,7 +14,7 @@
     {{ $addOnCss }}
 </head>
 
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
 
         <!-- Preloader -->
@@ -22,6 +22,8 @@
             <img class="animation__wobble" src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
                 height="60" width="60">
         </div>
+
+        <x-common.ajax-loader-one />
 
         @include('administrator.layouts.navigation')
 

@@ -12,7 +12,7 @@
       <a href="#" class="nav-link">Contact</a>
     </li> --}}
   </ul>
-  <marquee behavior="" class="timezoneMarquee" direction="">Timezone: {{ auth()->user()->timezone }}</marquee>
+  <marquee behavior="" class="timezoneMarquee" direction="" style="color: white">Timezone: {{ auth()->user()->timezone }}</marquee>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     

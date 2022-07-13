@@ -1,6 +1,6 @@
 @props(['ownerLists'=>$ownerLists])
 
-<table id="business_owner_table" class="display" data-target="{{ url('/administrator/category') }}">
+<table id="business_owner_table" class="display" data-target="{{ url('/administrator/owner') }}">
     <thead>
         <tr>
             <th>Name</th>
@@ -17,7 +17,12 @@
        @foreach ($ownerLists as $ownerList)
        
            <tr>
-            <td>{{ $ownerList->name }}</td>
+            <td style="text-align: center">
+                
+                <img class="rounded-circle" style="width: 50px;height: 50px;" src="{{$ownerList->image_path ? asset($ownerList->image_path) : 'https://i.pravatar.cc/50?u='.$ownerList->id }}" alt="">
+                
+                <p>{{ $ownerList->name }}</p>
+            </td>
             <td>{{ $ownerList->email }}</td>
             <td>{{ $ownerList->phone }}</td>
             <td>{{ $ownerList->location }}</td>
