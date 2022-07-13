@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#business_owner_table').DataTable({});
+    $('#business_owner_table').DataTable({"order": []});
 });
 
 //create
@@ -24,6 +24,10 @@ $(document).on('click', '.editOwner', function () {
         url: $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-ownerid') + '/edit',
         data: {},
         dataType: "json",
+        beforeSend: function () {
+            $('#spinner-loader').fadeIn(100);
+            $('#spinner-loader-text').html('Fetching...');
+        },
         success: function (response) {
 
             if (response.success) {
@@ -87,11 +91,35 @@ $(document).on('click', '.editOwner', function () {
                             cache:false,
                             contentType: false,
                             processData: false,
+                            beforeSend: function () {
+                                $('#spinner-loader').fadeIn(100);
+                                $('#spinner-loader-text').html('Updating...');
+                            },
                             success: function (response) {
                                 tableBody = preapreOwnerTable(response.data);
                                 $('#business_owner_body').html(tableBody);
                                 $('#business_owner_table').DataTable();
                                 $('.swal2-loader').fadeOut(100);
+                            },
+                            error: function (request, status, error) {
+                                responses = jQuery.parseJSON(request.responseText);
+                    
+                                if (responses.errors) {
+                                    var errorHtml = '<ul>';
+                                    $.each(responses.errors, function (key, value) {
+                                        errorHtml += '<li>' + value + '</li>';
+                                    });
+                                    errorHtml += '</ul>';
+                    
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: errorHtml
+                                    })
+                    
+                                }
+                            },
+                            complete: function () {
+                                $('#spinner-loader').fadeOut(100);
                             }
                         });
                     }
@@ -131,6 +159,26 @@ $(document).on('click', '.editOwner', function () {
             else {
                 alert(response.msg);
             }
+        },
+        error: function (request, status, error) {
+            responses = jQuery.parseJSON(request.responseText);
+
+            if (responses.errors) {
+                var errorHtml = '<ul>';
+                $.each(responses.errors, function (key, value) {
+                    errorHtml += '<li>' + value + '</li>';
+                });
+                errorHtml += '</ul>';
+
+                Toast.fire({
+                    icon: 'error',
+                    title: errorHtml
+                })
+
+            }
+        },
+        complete: function () {
+            $('#spinner-loader').fadeOut(100);
         }
     });
 });
