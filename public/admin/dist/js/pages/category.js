@@ -205,7 +205,7 @@ $(document).on('click', '.suspendCategory', function () {
             $.ajax({
                 type: "POST",
                 url: $(this).closest('table').attr('data-target') + '/' + $(this).closest('td').attr('data-categoryId') + '/suspend',
-                data: {},
+                data: {'_method': 'put'},
                 dataType: "json",
                 beforeSend: function () {
                     $('#spinner-loader').fadeIn(100);
@@ -272,7 +272,7 @@ function preapreCategoryTable(data) {
         tableBody += "<td data-categoryId='" + v.id + "'>";
         tableBody += "<i class='fa fa-trash deleteCategory' title='Delete'  style='margin-right: 20px;cursor: pointer;' aria-hidden='true'></i>";
         tableBody += '<i class="fa fa-edit editCategory" title="Edit" style="cursor: pointer;margin-right: 20px" aria-hidden="true"></i>';
-        tableBody += '<i class="fa fa-ban" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>';
+        tableBody += '<i class="fa fa-ban suspendCategory" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>';
         tableBody += "</td></tr>";
     });
 

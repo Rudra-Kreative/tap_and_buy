@@ -29,4 +29,9 @@ class Category extends Model
     {
         return $this->belongsTo(Administrator::class,'created_id');
     }
+
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
+    }
 }
