@@ -52,12 +52,12 @@ class User extends Authenticatable
 
     public function businesses()
     {
-        return $this->hasMany(Business::class);
+        return $this->hasMany(Business::class,'created_id');
     }
 
     public function products()
     {
-        return $this->hasManyThrough(Product::class,Business::class);
+        return $this->hasManyThrough(Product::class,Business::class,'created_id','business_id');
     }
 
 }

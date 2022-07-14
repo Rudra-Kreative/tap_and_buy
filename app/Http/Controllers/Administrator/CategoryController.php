@@ -41,6 +41,7 @@ class CategoryController extends Controller
             $category = new Category();
             $category->name = $request->name;
             $category->created_id = auth()->id();
+            $category->created_by = 'administrator';
             $category->slug = !empty($request->slug) ? $request->slug : Str::slug($request->name . Str::random(5), '-');
             $category->save();
         } catch (Exception $e) {
