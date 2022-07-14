@@ -92,7 +92,7 @@ class SubCategoryController extends Controller
      */
     public function destroy(Category $category,Request $request )
     {
-        $this->validate($request,['nothing'=>'required']);
+       
         $category->delete();
         $category->childs()->delete();
         if ($category->trashed()) {

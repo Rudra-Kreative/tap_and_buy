@@ -38,7 +38,7 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
         Route::post('/store' , [CategoryController::class,'store'])->name('store');
         Route::delete('/{category}/delete' ,[CategoryController::class ,'destroy'])->name('delete');
         Route::put('/{category}/update' , [CategoryController::class,'update'])->name('update');
-        Route::post('/{category}/suspend' , [CategoryController::class,'deactive'])->name('suspend');
+        Route::put('/{category}/suspend' , [CategoryController::class,'deactive'])->name('suspend');
     });
 
 
@@ -60,8 +60,8 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
         Route::post('/store',[AdminOwnerController::class,'store'])->name('store');
         Route::get('/{user}/edit',[AdminOwnerController::class,'edit'])->name('edit');
         Route::post('/{user}/update',[AdminOwnerController::class,'update'])->name('update');
-       
-        
+        Route::delete('/{user}/delete' ,[AdminOwnerController::class ,'destroy'])->name('delete');
+        Route::put('/{user}/suspend' , [AdminOwnerController::class,'deactive'])->name('suspend');
     });
 
     //users

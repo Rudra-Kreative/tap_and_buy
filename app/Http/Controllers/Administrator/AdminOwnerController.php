@@ -115,7 +115,7 @@ class AdminOwnerController extends Controller
 
         $res = [
             'key' => 'success',
-            'msg' => 'Business owner has been added successfully.'
+            'msg' => 'Business owner has been updated successfully.'
         ];
 
         try {
@@ -150,6 +150,30 @@ class AdminOwnerController extends Controller
         return $res;
     }
 
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        $user->businesses()->delete();
+
+        if ($user->trashed()) {
+            return ['res' => TRUE, 'msg' => 'Owner has been successfully deleted!!', 'data' => $this->getAllOwners()];
+        }
+
+        return ['res' => TRUE, 'msg' => 'Owner could not be deleted!!'];
+    }
+
+
+    public function deactive(User $user)
+    {
+        $user->is_active = false;
+        $user->save();
+
+        $user->businesses()->update(['is_active'=>false]);
+
+        return ['res' => TRUE, 'msg' => 'Selected Category has been suspended!!','data' => $this->getAllOwners()];
+    }
+
     public function getAllOwners()
     {
         return User::withCount(['businesses', 'products'])
@@ -157,7 +181,7 @@ class AdminOwnerController extends Controller
                 'is_active' => TRUE,
                 'role' => 2
             ])
-            ->orderBy('businesses_count')
+            ->orderBy('id','DESC')
             ->get();
     }
 

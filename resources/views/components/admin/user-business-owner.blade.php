@@ -32,7 +32,7 @@
             <td data-ownerId="{{ $ownerList->id }}">
                 <i class="fa fa-trash fa-xs deleteOwner" title="Delete"   style="margin-right: 5px;cursor: pointer;" aria-hidden="true"></i>
                 <i class="fa fa-edit fa-xs editOwner" title="Edit" style="cursor: pointer;margin-right: 5px" aria-hidden="true"></i>
-                <i class="fa fa-ban fa-xs" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>
+                <i class="fa fa-ban fa-xs suspendOwner" title="Suspend" style="cursor: pointer" aria-hidden="true"></i>
             </td>
            </tr>
        @endforeach
