@@ -107,6 +107,28 @@
                     </p>
                 </a>
              </li>
+
+             <li class="nav-item ">
+                <a href="#" class="nav-link {{ request()->routeIs('administrator.business_list ') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-briefcase"></i>
+                    <p> Event <i class="right fas fa-angle-left"></i> </p>
+                </a>
+
+                <ul class="nav nav-treeview">
+                    <li class="nav-item ">
+                        <a href="{{ route('administrator.event.category.view') }}" class="nav-link">
+                            <i class="fas fa-list-alt nav-icon"></i>
+                            <p>Event Category</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('administrator.business_list') }}" class="nav-link">
+                            <i class="fas fa-eye nav-icon"></i>
+                            <p>Event List</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
          </ul>
      </nav>
      <!-- /.sidebar-menu -->

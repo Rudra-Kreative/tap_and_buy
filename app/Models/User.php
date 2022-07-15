@@ -60,4 +60,9 @@ class User extends Authenticatable
         return $this->hasManyThrough(Product::class,Business::class,'created_id','business_id');
     }
 
+    public function eventCategories()
+    {
+        return $this->morphMany(EventCategory::class,'creatable');
+    }
+
 }

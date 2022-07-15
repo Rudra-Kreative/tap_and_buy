@@ -4,6 +4,7 @@ use App\Http\Controllers\Administrator\AdminOwnerController;
 use App\Http\Controllers\Administrator\AdminUserController;
 use App\Http\Controllers\Administrator\CategoryController;
 use App\Http\Controllers\Administrator\SubCategoryController;
+use App\Http\Controllers\EventCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,6 +69,18 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
     Route::prefix('user')->name('user.')->group(function(){
 
         Route::get('/owner',[AdminOwnerController::class,'index'])->name('owner.list');
+       
+        
+    });
+
+    Route::prefix('event')->name('event.')->group(function(){
+
+        Route::prefix('/category')->name('category.')->group(function(){
+            Route::get('/', [EventCategoryController::class ,'index'])->name('view');
+            Route::post('/store', [EventCategoryController::class ,'store'])->name('store');
+
+            Route::put('/{eventCategory}/suspend' , [EventCategoryController::class,'deactive'])->name('suspend');
+        });
        
         
     });

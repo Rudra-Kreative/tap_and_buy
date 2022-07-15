@@ -22,7 +22,17 @@ $(document).ready(function () {
     });
     
   
-    
+    $(".emoji-area").emojioneArea({
+  	
+		pickerPosition: "right",
+    tonesStyle: "bullet",
+		events: {
+         	keyup: function (editor, event) {d
+           		console.log(editor.html());
+           		console.log(this.getText());
+        	}
+    	}
+	});
 });
 
 
