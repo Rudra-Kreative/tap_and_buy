@@ -42,4 +42,10 @@ class Administrator extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function eventCategories()
+    {
+        return $this->morphMany(EventCategory::class,'creatable');
+    }
 }

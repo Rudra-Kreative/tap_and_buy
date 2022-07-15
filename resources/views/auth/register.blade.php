@@ -29,9 +29,9 @@
             <div class="mt-4">
                 <x-label for="role" :value="__('You are a:')" />
                 
-                <select name="" id="" class="w-full">
-                    <option value="">Business Owner</option>
-                    <option value="">Client</option>
+                <select name="role" id="" class="w-full">
+                    <option value="2">Business Owner</option>
+                    <option value="1">Client</option>
                 </select>
             </div>
             <!-- Email Address -->
@@ -62,7 +62,7 @@
             <div class="mt-4">
                 <x-label for="ocupation" :value="__('Ocupation')" />
 
-                <x-input id="ocupation" class="block mt-1 w-full" type="text" name="ocupation" :value="old('ocupation')"
+                <x-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" :value="old('ocupation')"
                     required />
             </div>
 
