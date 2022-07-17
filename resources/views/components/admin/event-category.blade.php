@@ -11,8 +11,8 @@
     </thead>
     <tbody id="event_category_body">
         @foreach ($eventCategories as $eventCategory)
-            <tr>
-                <td>{{ $eventCategory->name }}</td>
+            <tr {{ $eventCategory->is_active ? 'title=Active-Category' : 'style = text-decoration:line-through' . ' title=Suspended-Category' }}>
+                <td >{{  $eventCategory->name }}</td>
                 <td>{{ $eventCategory->creatable->name }}</td>
                 <td>{{ $eventCategory->created_at }}</td>
                 <td data-eventCategoryId="{{ $eventCategory->id }}">

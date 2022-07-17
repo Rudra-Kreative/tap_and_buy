@@ -122,7 +122,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('administrator.business_list') }}" class="nav-link">
+                        <a href="{{ route('administrator.event.view') }}" class="nav-link">
                             <i class="fas fa-eye nav-icon"></i>
                             <p>Event List</p>
                         </a>
