@@ -85,6 +85,7 @@ Route::middleware('auth:administrator')->prefix('administrator')->name('administ
        
         //event
         Route::get('/',[EventController::class ,'index'])->name('view');
+        Route::post('/store',[EventController::class ,'store'])->name('store');
         
     });
     

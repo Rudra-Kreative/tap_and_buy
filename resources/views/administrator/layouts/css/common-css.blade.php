@@ -11,3 +11,6 @@ href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&d
 <link rel="stylesheet" href="{{ asset('admin/plugins/jquery-datatables/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/plugins/emoji-picker/emojionearea.min.css') }}">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="{{ asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
